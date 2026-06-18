@@ -1,0 +1,409 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>鎌倉スポット＆しらす丼リスト</title>
+  <style>
+    :root {
+      --bg:#f6f8f7;
+      --paper:#ffffff;
+      --ink:#1f2f36;
+      --muted:#66777d;
+      --line:#dfe8e8;
+      --blue:#19758a;
+      --green:#2d735c;
+      --orange:#df8754;
+      --cream:#fff7e8;
+      --shadow:0 10px 26px rgba(17,60,70,.10);
+      --radius:22px;
+    }
+    * { box-sizing:border-box; }
+    html { scroll-behavior:smooth; }
+    body {
+      margin:0;
+      font-family:-apple-system,BlinkMacSystemFont,"Hiragino Sans","Yu Gothic","Noto Sans JP",sans-serif;
+      color:var(--ink);
+      background:
+        radial-gradient(circle at top left, rgba(25,117,138,.16), transparent 34%),
+        radial-gradient(circle at top right, rgba(45,115,92,.13), transparent 30%),
+        linear-gradient(180deg,#e9f6f8 0%,#f8f4ed 100%);
+      line-height:1.65;
+    }
+    .wrap {
+      max-width:920px;
+      margin:0 auto;
+      padding:18px 14px 72px;
+    }
+    .hero {
+      border-radius:30px;
+      padding:26px 20px;
+      background:linear-gradient(135deg,var(--blue),var(--green));
+      color:#fff;
+      box-shadow:var(--shadow);
+      position:relative;
+      overflow:hidden;
+    }
+    .hero::after {
+      content:"KAMAKURA";
+      position:absolute;
+      right:-18px;
+      bottom:-18px;
+      font-size:58px;
+      font-weight:900;
+      letter-spacing:.06em;
+      opacity:.09;
+    }
+    h1 {
+      margin:0 0 8px;
+      font-size:29px;
+      line-height:1.2;
+    }
+    .lead {
+      margin:0;
+      color:rgba(255,255,255,.92);
+      font-size:14px;
+    }
+    .chips {
+      display:flex;
+      flex-wrap:wrap;
+      gap:8px;
+      margin-top:16px;
+    }
+    .chip {
+      padding:7px 11px;
+      border-radius:999px;
+      background:rgba(255,255,255,.16);
+      border:1px solid rgba(255,255,255,.24);
+      font-size:12px;
+      font-weight:800;
+    }
+    .nav {
+      display:grid;
+      grid-template-columns:repeat(3,1fr);
+      gap:8px;
+      margin:14px 0 0;
+      position:sticky;
+      top:8px;
+      z-index:50;
+    }
+    .nav a {
+      text-align:center;
+      text-decoration:none;
+      color:var(--ink);
+      background:rgba(255,255,255,.94);
+      border:1px solid var(--line);
+      border-radius:15px;
+      padding:10px 4px;
+      font-size:12px;
+      font-weight:900;
+      box-shadow:0 8px 18px rgba(17,60,70,.08);
+      backdrop-filter:blur(8px);
+    }
+    .section {
+      margin-top:16px;
+      background:rgba(255,255,255,.84);
+      border:1px solid rgba(223,232,232,.9);
+      border-radius:var(--radius);
+      padding:16px;
+      box-shadow:var(--shadow);
+    }
+    .section-title {
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:10px;
+      margin-bottom:12px;
+    }
+    h2 {
+      margin:0;
+      font-size:19px;
+    }
+    .hint {
+      font-size:12px;
+      color:var(--muted);
+      font-weight:700;
+    }
+    .grid {
+      display:grid;
+      grid-template-columns:repeat(2, minmax(0, 1fr));
+      gap:12px;
+    }
+    .card {
+      background:var(--paper);
+      border:1px solid var(--line);
+      border-radius:20px;
+      padding:14px;
+      box-shadow:0 6px 16px rgba(17,60,70,.06);
+    }
+    .spot-card {
+      display:grid;
+      grid-template-columns:48px 1fr;
+      gap:12px;
+      align-items:start;
+    }
+    .icon {
+      width:48px;
+      height:48px;
+      display:grid;
+      place-items:center;
+      border-radius:16px;
+      background:#eef8f5;
+      font-size:25px;
+    }
+    .food-card {
+      display:flex;
+      flex-direction:column;
+      gap:10px;
+    }
+    .food-head {
+      display:flex;
+      gap:10px;
+      align-items:center;
+    }
+    .food-icon {
+      width:48px;
+      height:48px;
+      display:grid;
+      place-items:center;
+      border-radius:16px;
+      background:var(--cream);
+      font-size:25px;
+      flex:0 0 auto;
+    }
+    .eyebrow {
+      margin:0 0 2px;
+      color:var(--muted);
+      font-size:12px;
+      font-weight:900;
+    }
+    h3 {
+      margin:0;
+      font-size:17px;
+      line-height:1.35;
+    }
+    .memo {
+      margin:8px 0 0;
+      color:#42545a;
+      font-size:14px;
+    }
+    .btn-row {
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:8px;
+      margin-top:auto;
+    }
+    .btn {
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      text-align:center;
+      min-height:42px;
+      padding:10px 12px;
+      border-radius:14px;
+      color:#fff;
+      text-decoration:none;
+      font-size:13px;
+      font-weight:900;
+      line-height:1.25;
+    }
+    .btn.map { background:var(--blue); }
+    .btn.menu { background:var(--orange); }
+    .notice {
+      margin-top:12px;
+      border-radius:18px;
+      background:#fff7e8;
+      border:1px solid #ead7b8;
+      padding:12px 13px;
+      font-size:14px;
+      color:#594326;
+    }
+    .footer {
+      margin-top:18px;
+      text-align:center;
+      color:var(--muted);
+      font-size:12px;
+    }
+    @media (max-width:680px) {
+      .wrap { padding:14px 10px 56px; }
+      h1 { font-size:26px; }
+      .grid { grid-template-columns:1fr; }
+      .section { padding:14px; }
+      .btn-row { grid-template-columns:1fr; }
+      .nav a { font-size:11px; padding:9px 2px; }
+    }
+  </style>
+</head>
+<body>
+  <main class="wrap">
+    <section class="hero">
+      <h1>鎌倉スポット＆しらす丼リスト</h1>
+      <p class="lead">観光スポットと、鎌倉・江ノ島のしらす丼候補を見やすく整理</p>
+      <div class="chips">
+        <span class="chip">📍 Google Maps対応</span>
+        <span class="chip">🍚 しらす丼メニュー付き</span>
+        <span class="chip">🚗 ドライブ向け</span>
+      </div>
+    </section>
+
+    <nav class="nav">
+      <a href="#spots">観光</a>
+      <a href="#kamakura">鎌倉しらす</a>
+      <a href="#enoshima">江ノ島しらす</a>
+    </nav>
+
+    <section class="section" id="spots">
+      <div class="section-title">
+        <h2>観光スポット</h2>
+        <span class="hint">4 spots</span>
+      </div>
+      <div class="grid">
+        
+      <article class="card spot-card">
+        <div class="icon">🌿</div>
+        <div>
+          <p class="eyebrow">北鎌倉</p>
+          <h3>明月院</h3>
+          <p class="memo">6月の主役候補。あじさいシーズンは混雑しやすいので早め推奨。</p>
+          <a class="btn map" href="https://maps.app.goo.gl/qd54Knw95czbJfpV9?g_st=ic" target="_blank" rel="noopener">Google Maps</a>
+        </div>
+      </article>
+
+      <article class="card spot-card">
+        <div class="icon">⛩️</div>
+        <div>
+          <p class="eyebrow">鎌倉駅周辺</p>
+          <h3>鶴岡八幡宮</h3>
+          <p class="memo">鎌倉観光の定番。小町通りや鎌倉駅周辺のしらす丼候補と合わせやすい。</p>
+          <a class="btn map" href="https://maps.app.goo.gl/18GsdFFzCiYrZvMEA?g_st=ic" target="_blank" rel="noopener">Google Maps</a>
+        </div>
+      </article>
+
+      <article class="card spot-card">
+        <div class="icon">🎋</div>
+        <div>
+          <p class="eyebrow">浄明寺方面</p>
+          <h3>報国寺</h3>
+          <p class="memo">竹林で有名。閉門が早めなので、午後遅い場合は時間に注意。</p>
+          <a class="btn map" href="https://maps.app.goo.gl/4xGryBQEfquu74w5A?g_st=ic" target="_blank" rel="noopener">Google Maps</a>
+        </div>
+      </article>
+
+      <article class="card spot-card">
+        <div class="icon">🌸</div>
+        <div>
+          <p class="eyebrow">長谷方面</p>
+          <h3>長谷寺</h3>
+          <p class="memo">あじさい券が取れたら行く候補。取れない場合は無理せず別ルートへ。</p>
+          <a class="btn map" href="https://maps.app.goo.gl/hDRDTGtXn6WxHn4e7?g_st=ic" target="_blank" rel="noopener">Google Maps</a>
+        </div>
+      </article>
+
+      </div>
+    </section>
+
+    <section class="section" id="kamakura">
+      <div class="section-title">
+        <h2>しらす丼｜鎌倉方面</h2>
+        <span class="hint">観光優先</span>
+      </div>
+      <div class="grid">
+        
+      <article class="card food-card">
+        <div class="food-head">
+          <div class="food-icon">🍚</div>
+          <div>
+            <p class="eyebrow">鎌倉駅 / 小町通り方面</p>
+            <h3>食事処 秋本</h3>
+          </div>
+        </div>
+        <p class="memo">鎌倉中心でしらす丼を食べる本命候補。観光スポットと合わせやすい。</p>
+        <div class="btn-row">
+          <a class="btn map" href="https://maps.app.goo.gl/dQ6DKjSmLzM722Jz5?g_st=ic" target="_blank" rel="noopener">Google Maps</a>
+          <a class="btn menu" href="http://www.akimoto-kamakura.com/menu.html" target="_blank" rel="noopener">しらす丼メニュー</a>
+        </div>
+      </article>
+
+      <article class="card food-card">
+        <div class="food-head">
+          <div class="food-icon">🍚</div>
+          <div>
+            <p class="eyebrow">小町通り</p>
+            <h3>八倉 鎌倉小町通り店</h3>
+          </div>
+        </div>
+        <p class="memo">小町通りで使いやすい候補。鶴岡八幡宮の前後に寄りやすい。</p>
+        <div class="btn-row">
+          <a class="btn map" href="https://maps.app.goo.gl/wvKTdMLr9qpAJHwi9?g_st=ic" target="_blank" rel="noopener">Google Maps</a>
+          <a class="btn menu" href="https://www.wasai-yakura.com/menus?menu=%25E3%2581%258A%25E3%2581%2597%25E3%2581%25AA%25E3%2581%258C%25E3%2581%258D" target="_blank" rel="noopener">しらす丼メニュー</a>
+        </div>
+      </article>
+
+      </div>
+      <div class="notice">
+        鎌倉方面は、明月院・鶴岡八幡宮・報国寺を中心に回りたいときに便利。観光時間を確保しやすいパターンです。
+      </div>
+    </section>
+
+    <section class="section" id="enoshima">
+      <div class="section-title">
+        <h2>しらす丼｜江ノ島方面</h2>
+        <span class="hint">海沿いドライブ</span>
+      </div>
+      <div class="grid">
+        
+      <article class="card food-card">
+        <div class="food-head">
+          <div class="food-icon">🍚</div>
+          <div>
+            <p class="eyebrow">腰越 / 江ノ島方面</p>
+            <h3>しらすや</h3>
+          </div>
+        </div>
+        <p class="memo">腰越方面のしらす丼候補。江ノ島へ流すドライブプランと相性が良い。</p>
+        <div class="btn-row">
+          <a class="btn map" href="https://maps.app.goo.gl/njcqtufNjNUN6PFh8?g_st=ic" target="_blank" rel="noopener">Google Maps</a>
+          <a class="btn menu" href="https://r.gnavi.co.jp/g342624/photo/?cate=all" target="_blank" rel="noopener">しらす丼メニュー</a>
+        </div>
+      </article>
+
+      <article class="card food-card">
+        <div class="food-head">
+          <div class="food-icon">🍚</div>
+          <div>
+            <p class="eyebrow">江ノ島</p>
+            <h3>とびっちょ 本店</h3>
+          </div>
+        </div>
+        <p class="memo">江ノ島しらす丼の有名候補。混みやすいので待ち時間で判断。</p>
+        <div class="btn-row">
+          <a class="btn map" href="https://maps.app.goo.gl/2SGGWw7pwfQLgkB8A?g_st=ic" target="_blank" rel="noopener">Google Maps</a>
+          <a class="btn menu" href="http://tobiccho.com/shops/tobiccho" target="_blank" rel="noopener">しらす丼メニュー</a>
+        </div>
+      </article>
+
+      <article class="card food-card">
+        <div class="food-head">
+          <div class="food-icon">🍚</div>
+          <div>
+            <p class="eyebrow">江ノ島</p>
+            <h3>江の島ハルミ</h3>
+          </div>
+        </div>
+        <p class="memo">江ノ島内の候補。島内散策と合わせやすい。</p>
+        <div class="btn-row">
+          <a class="btn map" href="https://maps.app.goo.gl/fZ2riU6jZFBzaX4e6?g_st=ic" target="_blank" rel="noopener">Google Maps</a>
+          <a class="btn menu" href="http://enoshima-harumi.com/food/" target="_blank" rel="noopener">しらす丼メニュー</a>
+        </div>
+      </article>
+
+      </div>
+      <div class="notice">
+        江ノ島方面は、長谷寺チケットが取れない場合や、海沿いドライブ感を強めたいときの候補。鎌倉からの移動時間と渋滞は当日判断。
+      </div>
+    </section>
+
+    <p class="footer">GitHub Pagesに上げる場合は、このファイル名を index.html にしてください。</p>
+  </main>
+</body>
+</html>
